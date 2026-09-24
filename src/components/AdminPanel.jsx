@@ -496,8 +496,8 @@ export default function AdminPanel({ onClose }) {
   const { getDays } = useCourseSettings();
 
   return (
-    <div className="admin-overlay" onClick={onClose}>
-      <div className="admin-panel admin-panel-wide" onClick={(e) => e.stopPropagation()}>
+    <div className="admin-overlay">
+      <div className="admin-panel admin-panel-wide">
         <div className="admin-header">
           <h2>Admin Panel</h2>
           <button className="admin-close" onClick={onClose} aria-label="Bağla"><CloseIcon /></button>

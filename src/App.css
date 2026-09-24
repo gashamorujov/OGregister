@@ -129,6 +129,8 @@ html, body, #root {
 .btn-control.reset.active { color: var(--accent); border-color: var(--accent); }
 .btn-control.import { background: linear-gradient(135deg, #0f766e, #115e59); color: white; border-color: transparent; padding: 0 14px; }
 .btn-control.import:hover { box-shadow: 0 2px 8px rgba(15,118,110,0.4); }
+.btn-control.plan { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border-color: transparent; padding: 0 14px; }
+.btn-control.plan:hover { box-shadow: 0 2px 8px rgba(37,99,235,0.4); }
 
 .row-count { font-size: 0.85rem; color: var(--text-muted); background: var(--bg); padding: 6px 12px; border-radius: 8px; white-space: nowrap; }
 .btn-clear-filters { background: var(--danger); color: white; border: none; border-radius: 8px; padding: 6px 12px; font-size: 0.82rem; cursor: pointer; white-space: nowrap; }
@@ -230,7 +232,10 @@ html, body, #root {
   border: 1px solid var(--border); border-radius: var(--radius);
   box-shadow: var(--shadow-md); min-width: 230px; padding: 6px; animation: menuIn 0.12s ease;
 }
-.context-menu-header { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); padding: 6px 12px 8px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+.context-menu-header { display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); padding: 6px 6px 8px 12px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+.context-menu-close { display: inline-flex; align-items: center; justify-content: center; background: none; border: none; color: var(--text-muted); cursor: pointer; border-radius: 5px; padding: 3px; }
+.context-menu-close svg { width: 14px; height: 14px; }
+.context-menu-close:hover { color: var(--text); background: var(--header-bg); }
 .context-menu-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; font-size: 0.88rem; cursor: pointer; border-radius: 6px; color: var(--text); transition: background 0.1s; }
 .context-menu-item:hover { background: var(--primary-light); color: var(--primary); }
 .context-menu-item.highlight { color: var(--primary); font-weight: 600; background: var(--primary-light); }
@@ -288,6 +293,18 @@ html, body, #root {
 .course-group-meta { font-size: 0.76rem; color: var(--text-muted); }
 .teacher-select { min-width: 200px; padding: 7px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; background: white; }
 .modal-footer { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--border); }
+.plan-modal { max-width: 980px; }
+.plan-form { max-width: 460px; margin: 0 auto; padding: 16px 0 8px; }
+.plan-days-input { width: 100%; max-width: 220px; font-size: 1.1rem; }
+.plan-start-label { display: block; margin-top: 18px; }
+.plan-start-date { display: block; width: 100%; max-width: 220px; font-size: 1rem; cursor: pointer; }
+.plan-date-hint { margin-top: 6px; color: var(--text-muted); font-size: 0.75rem; }
+.plan-range-preview { margin-top: 12px; padding: 10px 12px; border-radius: 8px; background: var(--primary-light); color: var(--primary-dark); font-weight: 700; text-align: center; }
+.plan-result-meta { margin-bottom: 12px; color: var(--text-muted); font-size: 0.85rem; text-align: center; }
+.plan-image-frame { max-height: 60vh; overflow: auto; border: 1px solid var(--border); border-radius: 10px; background: #f8fafc; padding: 10px; }
+.plan-image-frame img { display: block; width: 100%; height: auto; }
+.plan-empty { margin-bottom: 12px; padding: 10px 12px; border-radius: 8px; background: var(--accent-soft); color: #92400e; text-align: center; font-size: 0.85rem; }
+.plan-download { text-decoration: none; }
 
 /* Import Excel Modal */
 .import-dropzone {
@@ -359,6 +376,8 @@ html, body, #root {
   .row-count { font-size: 0.78rem; }
   .filter-panel { width: 92vw; max-height: 80vh; }
   .modal { max-width: 100%; max-height: 90vh; }
+  .plan-modal { max-width: 100%; }
+  .plan-image-frame { max-height: 54vh; padding: 5px; }
   .course-group-row { flex-direction: column; align-items: stretch; }
   .teacher-select { min-width: 100%; }
 }

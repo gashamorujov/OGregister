@@ -159,7 +159,8 @@ function fillAttendancePage(sheet, group, pageDates, courseDateRange, pageInfo) 
     startRow: GDC_STUDENT_START_ROW,
     builtinEndRow: GDC_STUDENT_BUILTIN_END_ROW,
     hardEndRow: GDC_STUDENT_HARD_END_ROW,
-    valuesFor: (s, idx) => [idx + 1, 'N/A', s.fullName || '', 'Fiziki şəxs', s.rank || '', s.phone || ''],
+    // Contact Number must never be copied from the registry into a journal.
+    valuesFor: (s, idx) => [idx + 1, 'N/A', s.fullName || '', 'Fiziki şəxs', s.rank || '', ''],
   });
 
   return headerValues;
@@ -215,23 +216,46 @@ function fillStudentBlock(sheet, students, opts) {
 
   students.forEach((student, idx) => {
     const row = startRow + idx;
-    if (row > builtinEndRow) {
-      // Beyond the template's pre-built slots: extend using the matching
-      // odd/even style (the template alternates row shading every other
-      // student row), then unhide.
-      const parityRow = startRow + ((row - startRow) % 2);
-      copyRowStyle(sheet, parityRow, row, styleCols);
-    }
+    // Repaint every participant row from the first known-good template row.
+    // This also repairs inconsistent pre-built rows (not only appended rows).
+    // New rows therefore use exactly the same font, fill, borders, alignment
+    // and row height as the canonical participant row.
+    copyRowStyle(sheet, startRow, row, styleCols);
     sheet.getRow(row).hidden = false;
     const values = valuesFor(student, idx);
     fixedCols.forEach((col, ci) => {
       const v = values[ci];
-      sheet.getRow(row).getCell(col).value = (v === undefined ? null : v);
+      const cell = sheet.getRow(row).getCell(col);
+      cell.value = (v === undefined ? null : v);
+      // Keep every value inside its existing template box. Excel/Sheets then
+      // scales long names and positions down instead of painting over the
+      // neighbouring cell or increasing the journal row height.
+      cell.alignment = {
+        ...(cell.alignment || {}),
+        vertical: 'middle',
+        shrinkToFit: true,
+        wrapText: false,
+      };
     });
+
+    // "Fiziki şəxs" is the organization value, but it must look exactly like
+    // the position value beside it. Copy only the font/alignment so the
+    // organization's own border and column geometry remain untouched.
+    const organizationCell = sheet.getRow(row).getCell(4);
+    const positionCell = sheet.getRow(row).getCell(5);
+    organizationCell.font = JSON.parse(JSON.stringify(positionCell.font));
+    organizationCell.alignment = {
+      ...(organizationCell.alignment || {}),
+      ...(positionCell.alignment || {}),
+      vertical: 'middle',
+      shrinkToFit: true,
+      wrapText: false,
+    };
   });
 
   // Blank + hide any remaining pre-built slot the group doesn't need.
   for (let row = startRow + count; row <= builtinEndRow; row += 1) {
+    copyRowStyle(sheet, startRow, row, styleCols);
     fixedCols.forEach((col) => { sheet.getRow(row).getCell(col).value = null; });
     sheet.getRow(row).hidden = true;
   }

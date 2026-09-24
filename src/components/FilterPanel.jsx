@@ -1,19 +1,17 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { CloseIcon } from './Icons';
 
 export default function FilterPanel({ field, headerName, values, selected, onApply, onClose }) {
   const [searchText, setSearchText] = useState('');
   const [checked, setChecked] = useState(new Set(selected));
-  const ref = useRef(null);
-
   useEffect(() => setChecked(new Set(selected)), [selected]);
 
   useEffect(() => {
     const h = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) onClose();
+      if (e.key === 'Escape') onClose();
     };
-    document.addEventListener('mousedown', h);
-    return () => document.removeEventListener('mousedown', h);
+    document.addEventListener('keydown', h);
+    return () => document.removeEventListener('keydown', h);
   }, [onClose]);
 
   const filtered = values.filter(v =>
@@ -32,7 +30,7 @@ export default function FilterPanel({ field, headerName, values, selected, onApp
 
   return (
     <div className="filter-overlay">
-      <div className="filter-panel" ref={ref}>
+      <div className="filter-panel">
         <div className="filter-header">
           <h3>{headerName}</h3>
           <button className="filter-close" onClick={onClose} aria-label="Bağla"><CloseIcon /></button>

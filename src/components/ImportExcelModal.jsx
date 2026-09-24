@@ -344,8 +344,8 @@ export default function ImportExcelModal({ existingRows = [], onConfirm, onCance
   };
 
   return (
-    <div className="modal-overlay" onClick={onCancel}>
-      <div className="modal" style={{ maxWidth: step === 'preview' ? 1000 : 640 }} onClick={(e) => e.stopPropagation()}>
+    <div className="modal-overlay">
+      <div className="modal" style={{ maxWidth: step === 'preview' ? 1000 : 640 }}>
         <div className="modal-header">
           <h2>{STEP_TITLES[step]}</h2>
           <button className="modal-close" onClick={onCancel} aria-label="Bağla"><CloseIcon /></button>

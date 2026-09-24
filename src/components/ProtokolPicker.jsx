@@ -105,8 +105,8 @@ export default function ProtokolPicker({
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal modal-wide" onClick={(e) => e.stopPropagation()}>
+    <div className="modal-overlay">
+      <div className="modal modal-wide">
         <div className="modal-header">
           <h2><DocIcon /> Protokol Yükləmə</h2>
           <button className="modal-close" onClick={onClose} aria-label="Bağla"><CloseIcon /></button>

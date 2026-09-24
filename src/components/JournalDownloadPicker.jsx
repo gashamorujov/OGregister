@@ -32,7 +32,7 @@ export default function JournalDownloadPicker({
         teacher: group.teacher,
         studentCount: group.students.length,
         students: group.students.map((s) => ({
-          fullName: s.fullName || '', rank: s.rank || '', email: s.email || '', phone: s.phone || '',
+          fullName: s.fullName || '', rank: s.rank || '', email: s.email || '', phone: '',
         })),
       });
       downloadWorkbookBuffer(result.buffer, result.fileName);
@@ -46,8 +46,8 @@ export default function JournalDownloadPicker({
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal modal-wide" onClick={(e) => e.stopPropagation()}>
+    <div className="modal-overlay">
+      <div className="modal modal-wide">
         <div className="modal-header">
           <h2><JournalIcon /> Jurnal Yükləmə</h2>
           <button className="modal-close" onClick={onClose} aria-label="Bağla"><CloseIcon /></button>

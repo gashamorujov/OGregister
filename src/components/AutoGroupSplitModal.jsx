@@ -63,8 +63,8 @@ export default function AutoGroupSplitModal({ groups, getMaxParticipants, onReso
   };
 
   return (
-    <div className="modal-overlay" onClick={onCancel}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
+    <div className="modal-overlay">
+      <div className="modal">
         <div className="modal-header">
           <h2>Avtomatik Qruplaşdırma</h2>
           <button className="modal-close" onClick={onCancel} aria-label="Bağla"><CloseIcon /></button>

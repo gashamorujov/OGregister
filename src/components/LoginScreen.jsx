@@ -18,22 +18,24 @@ export default function LoginScreen({ onLogin, hasAccess }) {
         <h1>İSTREGISTER</h1>
         <p className="login-sub">Tədris Reyestri İdarəetmə Sistemi</p>
 
-        <label className="login-label" htmlFor="access-code">Giriş kodu</label>
-        <input
-          id="access-code"
-          type="password"
-          inputMode="numeric"
-          className="login-input"
-          placeholder="••••"
-          value={code}
-          maxLength={10}
-          onChange={(e) => { setCode(e.target.value); setError(''); }}
-          onKeyDown={(e) => { if (e.key === 'Enter') handleSubmit(e); }}
-          autoFocus
-        />
-        {error && <div className="login-error">{error}</div>}
+        <form onSubmit={handleSubmit}>
+          <label className="login-label" htmlFor="access-code">Giriş kodu</label>
+          <input
+            id="access-code"
+            type="password"
+            inputMode="numeric"
+            autoComplete="current-password"
+            className="login-input"
+            placeholder="••••"
+            value={code}
+            maxLength={10}
+            onChange={(e) => { setCode(e.target.value); setError(''); }}
+            autoFocus
+          />
+          {error && <div className="login-error">{error}</div>}
 
-        <button className="btn-login" onClick={handleSubmit}>Giriş</button>
+          <button type="submit" className="btn-login">Giriş</button>
+        </form>
 
       </div>
     </div>

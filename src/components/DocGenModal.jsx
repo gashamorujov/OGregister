@@ -110,8 +110,8 @@ export default function DocGenModal({
   const confirmLabel = isJournal ? 'Təsdiqlə və qrup seç' : 'Yüklə (Excel)';
 
   return (
-    <div className="modal-overlay" onClick={onCancel}>
-      <div className="modal modal-wide" onClick={(e) => e.stopPropagation()}>
+    <div className="modal-overlay">
+      <div className="modal modal-wide">
         <div className="modal-header">
           <h2>{isJournal ? <JournalIcon /> : <ImportIcon />} {title}</h2>
           <button className="modal-close" onClick={onCancel} aria-label="Bağla"><CloseIcon /></button>

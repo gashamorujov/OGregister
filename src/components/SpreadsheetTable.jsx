@@ -8,6 +8,7 @@ import JournalDownloadPicker from './JournalDownloadPicker';
 import ProtokolPicker from './ProtokolPicker';
 import AutoGroupSplitModal from './AutoGroupSplitModal';
 import ImportExcelModal from './ImportExcelModal';
+import PlanModal from './PlanModal';
 import ExcelGrid from './ExcelGrid';
 import { generateTrainingPlan } from '../lib/excelGenerator';
 import { buildCourseGroups } from '../lib/courseGroups';
@@ -20,7 +21,7 @@ import useCourseSettings from '../lib/useCourseSettings';
 import useGroupCounters from '../lib/useGroupCounters';
 import useArchive from '../lib/useArchive';
 import {
-  SearchIcon, CloseIcon, ResetFilterIcon, ImportIcon, WarningIcon,
+  SearchIcon, CloseIcon, ResetFilterIcon, ImportIcon, WarningIcon, CalendarIcon,
 } from './Icons';
 
 // The literal trigger the spec asks for: typing this into the main search
@@ -50,6 +51,7 @@ export default function SpreadsheetTable({ onOpenAdmin }) {
   const [menuState, setMenuState] = useState(null);
   const [activeFilterColumn, setActiveFilterColumn] = useState(null);
   const [importOpen, setImportOpen] = useState(false);
+  const [planOpen, setPlanOpen] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(null);
 
   // Document generation flow: context menu -> (maybe) auto-grouping -> assignment modal.
@@ -340,6 +342,9 @@ export default function SpreadsheetTable({ onOpenAdmin }) {
             <button className="btn-control import" onClick={() => setImportOpen(true)} title="Excel-dən yeni məlumat idxal et">
               <ImportIcon /> Import
             </button>
+            <button className="btn-control plan" onClick={() => setPlanOpen(true)} title="Tarix aralığı üzrə plan yarat">
+              <CalendarIcon /> Plan
+            </button>
           </div>
         </div>
       </div>
@@ -398,8 +403,8 @@ export default function SpreadsheetTable({ onOpenAdmin }) {
       )}
 
       {confirmDelete && (
-        <div className="modal-overlay" onClick={() => setConfirmDelete(null)}>
-          <div className="modal confirm-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-overlay">
+          <div className="modal confirm-modal">
             <div className="confirm-body">
               <div className="confirm-icon"><WarningIcon /></div>
               <div className="confirm-title">Sətir silinsin?</div>
@@ -467,6 +472,14 @@ export default function SpreadsheetTable({ onOpenAdmin }) {
           existingRows={rows}
           onConfirm={handleImportConfirm}
           onCancel={() => setImportOpen(false)}
+        />
+      )}
+
+      {planOpen && (
+        <PlanModal
+          rows={rows}
+          getDays={getDays}
+          onClose={() => setPlanOpen(false)}
         />
       )}
     </div>
